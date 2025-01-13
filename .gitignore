@@ -166,3 +166,10 @@ cython_debug/
 
 # Migrations
 **/migrations/
+
+# Ignore all init files
+*_initial.py
+
+# Static files
+staticfiles/
+static/
