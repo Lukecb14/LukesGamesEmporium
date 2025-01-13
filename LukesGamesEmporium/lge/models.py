@@ -21,9 +21,10 @@ class Game(models.Model):
     
 class Score(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, null=False)
-    score = models.IntegerField()
+    score = models.IntegerField(null=True)
     game = models.ForeignKey(Game, on_delete=models.CASCADE)
     date = models.DateTimeField(auto_now_add=True)
+    rawData = models.TextField()
 
     def __str__(self):
         return (str(self.user) + ": " + str(self.score) + " on " + str(self.game) + " (" + str(self.date) + ")")
