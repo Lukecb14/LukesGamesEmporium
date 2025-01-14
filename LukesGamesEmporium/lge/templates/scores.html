@@ -1,0 +1,96 @@
+{% extends "base.html" %}
+
+{% block title %}LGE Scores{% endblock title %}
+
+{% block content %}
+<div class="container">
+    <h1>Scores</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Game</th>
+                <th>Top 5 Scores</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for score in topScores %}
+            <tr>
+                <td>{{ score.game.title }}</td>
+                <td>{{ score.score }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Game</th>
+                <th>5 Most Recent Scores</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for score in recentScores %}
+            <tr>
+                <td>{{ score.game.title }}</td>
+                <td>{{ score.score }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+<div class="container">
+    <h2>Score Distribution</h2>
+    <canvas id="scoreChart" width="400" height="200"></canvas>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        var ctx = document.getElementById('scoreChart').getContext('2d');
+        var scores = {{arrayScores}};
+        var labels = [];
+        var data = [];
+        var binSize = 5000; // Adjust the bin size as needed
+
+        // Generate labels and data for the bell curve
+        var minScore = 0;
+        var maxScore = 50000;
+        for (var i = minScore; i <= maxScore; i += binSize) {
+            labels.push(i + '-' + (i + binSize - 1));
+            data.push(scores.filter(score => score >= i && score < i + binSize).length);
+        }
+
+        var chart = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: labels,
+                datasets: [{
+                    label: 'Score Distribution',
+                    data: data,
+                    borderColor: 'rgba(75, 192, 192, 1)',
+                    borderWidth: 1,
+                    fill: false,
+                    tension: 0.1
+                }]
+            },
+            options: {
+                scales: {
+                    x: {
+                        title: {
+                            display: true,
+                            text: 'Score Ranges'
+                        }
+                    },
+                    y: {
+                        title: {
+                            display: true,
+                            text: 'Frequency'
+                        }
+                    }
+                }
+            }
+        });
+    </script>
+</div>
+{% endblock content %}
