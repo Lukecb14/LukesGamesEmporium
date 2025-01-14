@@ -11,3 +11,5 @@ def addScore(raw_score_data, game, user):
         raise ValueError("Invalid score format. Score not added.")
 
     newScore = Score.objects.create(rawData=raw_score_data, game=game, user=user, score=score)
+
+    return newScore

@@ -5,7 +5,8 @@ from lge.modelAPI import addScore
 
 @login_required
 def uploadPage(request):
-
+    submissionMessage = ""
+    errorMessage = ""
 
     if request.method == 'POST':
         game_id = request.POST.get('game_title')
@@ -15,16 +16,20 @@ def uploadPage(request):
             game = Game.objects.get(id=game_id)
         
             try:
-                addScore(raw_score_data, game, user)
+                newScore = addScore(raw_score_data, game, user)
+                if newScore:
+                    submissionMessage = "Score added successfully"
             except ValueError as e:
-                print(e)
+                errorMessage = str(e)
                 
-        except Game.DoesNotExist:
-            print("Game not found")
+        except ValueError:
+            errorMessage = "Game not selected, please choose a game"
         
         
     context = {
-        "games": Game.objects.all()
+        "games": Game.objects.all(),
+        "submissionMessage": submissionMessage,
+        "errorMessage": errorMessage
     }
         
     return render(request, 'upload.html', context)
