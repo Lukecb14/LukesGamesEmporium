@@ -6,6 +6,7 @@
 <div class="container">
     <h1>Scores</h1>
 
+    <h3>Top 5 Scores</h3>
     <table class="table">
         <thead>
             <tr>
@@ -22,7 +23,10 @@
             {% endfor %}
         </tbody>
     </table>
+</div>
 
+<div class = "container">
+    <h3>5 Most Recent Scores</h3>
     <table class="table">
         <thead>
             <tr>
@@ -42,7 +46,7 @@
 </div>
 
 <div class="container">
-    <h2>Score Distribution</h2>
+    <h3>Score Distribution</h3>
     <canvas id="scoreChart" width="400" height="200"></canvas>
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
