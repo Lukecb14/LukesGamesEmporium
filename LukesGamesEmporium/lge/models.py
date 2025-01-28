@@ -28,3 +28,10 @@ class Score(models.Model):
 
     def __str__(self):
         return (str(self.user) + ": " + str(self.score) + " on " + str(self.game) + " (" + str(self.date) + ")")
+    
+class FriendRequest(models.Model):
+    sender = models.ForeignKey(User, on_delete=models.CASCADE, related_name='requestFrom', null=False)
+    receiver = models.ForeignKey(User, on_delete=models.CASCADE, related_name="requestTo",null=False)
+
+    def __str__(self):
+        return("Freind request from " + str(self.userFrom) + " to " + str(self.userTo))

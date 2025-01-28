@@ -16,7 +16,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from lge.views import home, signup, upload, scores
+from lge.views import home, signup, upload, scores, friends
 from django.contrib.auth import views as auth_views
 
 urlpatterns = [
@@ -26,4 +26,5 @@ urlpatterns = [
     path('', home.home, name='lge-home'),
     path('upload/', upload.uploadPage, name='lge-upload'),
     path('scores/', scores.scorePage, name='lge-scores'),
+    path('friends/', friends.friendPage, name='lge-friends'),
 ]
