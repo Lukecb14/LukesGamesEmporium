@@ -46,8 +46,19 @@ def friendPage(request):
 
     received_requests = FriendRequest.objects.filter(receiver=request.user)
     sent_requests = FriendRequest.objects.filter(sender=request.user)
+    # Find all friends of the current user
+    all_friends = Friends.objects.filter(user=request.user) | Friends.objects.filter(friend=request.user)
+    current_friends = []
+    for friend in all_friends:
+        if friend.user == request.user:
+            friend_user = friend.friend
+        else:
+            friend_user = friend.user
+        current_friends.append(friend_user)
+        
 
     context = {
+        "currrent_friends": current_friends,
         "userMessage": userMessage,
         "received_requests": received_requests,
         "sent_requests": sent_requests,

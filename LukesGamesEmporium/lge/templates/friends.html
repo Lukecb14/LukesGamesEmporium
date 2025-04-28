@@ -19,6 +19,13 @@
     <p>{{ userMessage }}</p>
     {% endif %}
 
+    <h2>Friends</h2>
+    <ul>
+        {% for friend in currrent_friends %}
+        <li>{{ friend }}</li>
+        {% endfor %}
+    </ul>
+    
     <h2>Received Friend Requests</h2>
     <ul>
         {% for request in received_requests %}
