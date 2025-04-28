@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 
-{% block title %}LGE Scores{% endblock title %}
+{% block title %}LGE Friends{% endblock title %}
 
 {% block content %}
 <div class="container">
@@ -12,12 +12,35 @@
             <label for="username">Friend's Username:</label>
             <input type="text" id="username" name="username" class="form-control" required>
         </div>
-        <button type="submit" class="btn btn-primary">Send Friend Request</button>
+        <button type="submit" name="action" value="send" class="btn btn-primary">Send Friend Request</button>
     </form>
 
     {% if userMessage %}
-    <p>{{userMessage}}</p>
+    <p>{{ userMessage }}</p>
     {% endif %}
-    
+
+    <h2>Received Friend Requests</h2>
+    <ul>
+        {% for request in received_requests %}
+        <li>
+            {{ request.sender.username }}
+            <form action="" method="post" style="display:inline;">
+                {% csrf_token %}
+                <input type="hidden" name="request_id" value="{{ request.id }}">
+                <button type="submit" name="action" value="accept" class="btn btn-success">Accept</button>
+                <button type="submit" name="action" value="reject" class="btn btn-danger">Reject</button>
+            </form>
+        </li>
+        {% endfor %}
+    </ul>
+
+    <h2>Sent Friend Requests</h2>
+    <ul>
+        {% for request in sent_requests %}
+        <li>
+            {{ request.receiver.username }}
+        </li>
+        {% endfor %}
+    </ul>
 </div>
 {% endblock content %}

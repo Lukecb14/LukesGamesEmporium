@@ -1,5 +1,5 @@
 from django.contrib import admin
-from lge.models import UserProfile, Game, Score
+from lge.models import UserProfile, Game, Score, FriendRequest, Friends
 from django.contrib.auth.models import User
 from django.contrib.auth.admin import UserAdmin
 
@@ -17,3 +17,6 @@ admin.site.register(User, UserProfileAdmin)
 
 admin.site.register(Game)
 admin.site.register(Score)
+admin.site.register(UserProfile)
+admin.site.register(FriendRequest)
+admin.site.register(Friends)

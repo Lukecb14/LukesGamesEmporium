@@ -6,8 +6,7 @@ from django.dispatch import receiver
 # Create your models here.
 
 class UserProfile(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
-    following = models.ManyToManyField('self', symmetrical=False, related_name='followers', blank=True)
+    user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='userprofile')
 
     def __str__(self):
         return self.user.username
@@ -35,3 +34,10 @@ class FriendRequest(models.Model):
 
     def __str__(self):
         return("Freind request from " + str(self.userFrom) + " to " + str(self.userTo))
+
+class Friends(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='friends', null=False)
+    friend = models.ForeignKey(User, on_delete=models.CASCADE, related_name='friendOf', null=False)
+
+    def __str__(self):
+        return (str(self.user) + " is friends with " + str(self.friend))
